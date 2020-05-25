@@ -27,6 +27,7 @@ To accommodate these needs, we implemented the pipeline below to allow for multi
 
 ## Overview
 The pipeline is broken into several main sections:
+
 0. Setup
 1. Preliminary read processing
 2. Mapping and cleanup
@@ -147,9 +148,9 @@ The pipeline is broken into several main sections:
 
 2. Generate .bed files from STAR output
     This will be need to be run for each sample.  Output should be placed in the 8_bamtobed folder.<BR></BR>
-    **Note: uniqued files seem to have about 0.1% fewer entries ~10K entries for 10M read library.*
-    **Note: It is a good idea to check the formatting of the .bed files.  Locus formatting should match that in the main annotation .bed that will be used.  Depending on the STAR input files, the STAR output may or may not have some common formatting features (such as "chr" beginning each entry).  Check for consistency and include an awk command below if minor formatting changes are required.*<BR></BR>
-    **Note: For the mm9 and mm10 assembly annotations, the formatting is consistent so no addition awk command is needed. It is needed, however, for the dm6 annotations.*<BR>
+    <I>*Note: uniqued files seem to have about 0.1% fewer entries ~10K entries for 10M read library.<BR>
+    *Note: It is a good idea to check the formatting of the .bed files.  Locus formatting should match that in the main annotation .bed that will be used.  Depending on the STAR input files, the STAR output may or may not have some common formatting features (such as "chr" beginning each entry).  Check for consistency and include an awk command below if minor formatting changes are required.<BR>
+    *Note: For the mm9 and mm10 assembly annotations, the formatting is consistent so no addition awk command is needed. It is needed, however, for the dm6 annotations.</I><BR>
    
     **Example - mm10:**<BR>
 	```bedtools bamtobed -i S1/Aligned.sortedByCoord.out.bam > S1.bed; sort -k1,1 -k2,2n S1.bed | uniq > S1_unique.bed```
@@ -262,7 +263,7 @@ Since DESeq2 does not support fractional reads, a new gene model is built.
 	```python 4b_deseq2/make_logical_gene_list.py```
 Move the outputs to a directory 11b_logical_genes.
 
-2. Create composite files will all logical_genes and read_ids<BR></BR>
+2. Create composite files will all logical_genes and read_ids
 **Example:**<BR>
 	```cat S1/*.txt | sort > S1/S1-logical_abundance_lookup.txt```
 	```cat S1/*.txt | sort > S1/S1-all-logical_genes.txt```
@@ -272,8 +273,7 @@ A prep script was written that takes *-all-logical_genes.txt files for each samp
 	```python 4b_deseq2/deseq2_prep.py```
 
 4. Run DESeq2
-    1. Launch the script run_deseq2_eclip_v1.Rmd in R studio.<BR></BR>
-    **Note: This script assumes the column order as follows: bg_input, ip1_input, ip2_input, bg_ip, ip1, ip2*<BR>
+    1. Launch the script run_deseq2_eclip_v1.Rmd in R studio. <B>This script assumes the column order as follows: bg_input, ip1_input, ip2_input, bg_ip, ip1, ip2</B>
     2. Set the folder and working directory.<BR></BR>
 	**DESeq2 will be run three times:**
     	1. ip versus all inputs
@@ -282,13 +282,13 @@ A prep script was written that takes *-all-logical_genes.txt files for each samp
 
 5. Calculate fold-enrichments and extract statistics
 Background-subtracted fold enrichments are calculated by comparing the various DESeq2 outputs.
-The output file will have the following tab-delimited columns:<BR></BR>
+The output file will have the following tab-delimited columns:
     ```
     gene name (or logical gene name)    fold enrichment     p-value[adjusted]
     ```
     <I>*Note: Make sure to adjust the background scaling factors at the top of the script.  These should be the same as those used in the simple enrichment pipeline.<BR>
     *Note: DESeq2 output includes log2-fold enrichments.  These are converted to fold enrichments (not log2).<BR>
-    *Note: p-values will be the less significant value of [ip versus input; ip versus background])</I>
+    *Note: p-values will be the less significant value of [ip versus input; ip versus background])</I><BR>
     ```python 4b_deseq2/deseq2_polish.py```
 
 6. File cleanup - Add no_annotation class<BR>
