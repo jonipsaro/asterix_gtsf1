@@ -22,7 +22,7 @@ To accommodate these needs, we implemented the pipeline below to allow for multi
 - If combining paired-end reads, we recommend using FLASH, which can be downloaded here: https://ccb.jhu.edu/software/FLASH/
 - Mapping is performed using STAR (https://github.com/alexdobin/STAR)
 - Additional tools that are used in this workflow are bedtools (https://bedtools.readthedocs.io/) and collapse (from the FASTX utilities in Galaxy; https://usegalaxy.org/)
-- DESeq2, which is only used for an alternative workflow is run in R. An example script is provided.
+- DESeq2 (https://bioconductor.org/packages/release/bioc/html/DESeq2.html), which is only used for an alternative workflow is run in R. An example script is provided.
 - Suggested file architecture and directory names are listed, but these can be adjusted.  Please note the if you want to customize these, changes may need to be made within the scripts as well.
 
 ## Overview
