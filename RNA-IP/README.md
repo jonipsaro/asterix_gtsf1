@@ -16,7 +16,8 @@ The workflow is divided into the following steps:
 
 ## Step 2 - Trim reads
 1. The first 3 nucleotides can be removed in many ways. In our workflow, we used trimmomatic to simultaneously perform initial quality filtering<BR>
-	```trimmomatic -threads 1 -phred33 fastq_in.fastqsanger fastq_out.fastqsanger HEADCROP:3 SLIDINGWINDOW:4:20```
+	```trimmomatic -threads 1 -phred33 fastq_in.fastqsanger fastq_out.fastqsanger HEADCROP:3 SLIDINGWINDOW:4:20```<BR><BR>
+
 2. PolyA tail removal was performed using *polyA_trim.py*. 
 The script will look for the first instance of an 8 nucleotide polyA and crop the sequence (this includes some tolerance for small deviations if they are near to a large polyA span).
 The length of these spans can be modified by replacing the variable $polyA and modifying the get_polyA function if desired.
