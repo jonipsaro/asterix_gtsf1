@@ -1,0 +1,103 @@
+#Jonathan Ipsaro
+#Cold Spring Harbor Laboratory
+#Last reviewed May 25, 2020
+
+library(readr)
+library("DESeq2")
+
+#Set working directory and folder
+folder = ""
+setwd()
+
+#This is the full set of countdata
+countdata <- read_delim("S123456-deseq2_input.txt", "\t", escape_double = FALSE, col_names = FALSE, trim_ws = TRUE)
+colnames(countdata) = c("annotation", "bg_input", "ip1_input", "ip2_input", "bg_ip", "ip1", "ip2")
+rownames(countdata) = countdata$annotation
+countdata$annotation = NULL
+
+#These are subsets of countdata
+countdata_ip_v_input <-  data.frame(countdata$bg_input, countdata$ip1_input, countdata$ip2_input, countdata$ip1, countdata$ip2)
+colnames(countdata_ip_v_input) = c("bg_input", "ip1_input", "ip2_input", "ip1", "ip2")
+rownames(countdata_ip_v_input) = rownames(countdata)
+
+countdata_bgip_v_input <- data.frame(countdata$bg_input, countdata$ip1_input, countdata$ip2_input, countdata$bg_ip)
+colnames(countdata_bgip_v_input) = c("bg_input", "ip1_input", "ip2_input", "bg_ip")
+rownames(countdata_bgip_v_input) = rownames(countdata)
+
+countdata_ip_v_bgip <- data.frame(countdata$bg_ip, countdata$ip1, countdata$ip2)
+colnames(countdata_ip_v_bgip) = c("bg_ip", "ip1", "ip2")
+rownames(countdata_ip_v_bgip) = rownames(countdata)
+
+#This is the full coldata
+coldata <- as.data.frame(colnames(countdata))
+rownames(coldata) = colnames(countdata)
+colnames(coldata) = "sample"
+coldata <- subset(coldata, sample != "annotation")
+coldata$ip <- ifelse(grepl("input", coldata$sample), "input", "ip")
+coldata$clip <- ifelse(grepl("^bg", coldata$sample), "background", "experimental")
+
+#These are the subsets of coldata
+coldata_ip_v_input <- coldata[c("bg_input", "ip1_input", "ip2_input", "ip1", "ip2"),] 
+coldata_bgip_v_input <- coldata[c("bg_input", "ip1_input", "ip2_input", "bg_ip"),]
+coldata_ip_v_bgip <- coldata[c("bg_ip", "ip1", "ip2"),]
+
+
+
+#Configure and run DESeq2 for ip versus inputs
+dds <- DESeqDataSetFromMatrix(
+  countData = countdata_ip_v_input, 
+  colData = coldata_ip_v_input, 
+  design = ~ ip)
+dds$ip <- relevel(dds$ip, "input")
+
+dds <- DESeq(dds)
+res <- results(dds)
+write.table(as.data.frame(res), file="S12356-deseq2_output.tabular", sep="\t")
+
+
+
+#Configure and run DESeq2 for bg_ip versus inputs
+dds <- DESeqDataSetFromMatrix(
+  countData = countdata_bgip_v_input, 
+  colData = coldata_bgip_v_input, 
+  design = ~ ip)
+dds$ip <- relevel(dds$ip, "input")
+
+dds <- DESeq(dds)
+res <- results(dds)
+write.table(as.data.frame(res), file="S1234-deseq2_output.tabular", sep="\t")
+
+
+
+#Configure and run DESeq2 for ip versus bg_ip
+dds <- DESeqDataSetFromMatrix(
+  countData = countdata_ip_v_bgip, 
+  colData = coldata_ip_v_bgip, 
+  design = ~ clip)
+dds$clip <- relevel(dds$clip, "background")
+
+dds <- DESeq(dds)
+res <- results(dds)
+write.table(as.data.frame(res), file="S456-deseq2_output.tabular", sep="\t")
+
+
+#Diagnoistic plots and sanity checks can be used in each run if desired
+#To check for proper run setup
+as.data.frame(colData(dds))
+#Diagnostic plots
+plotMA( res, ylim = c(-1, 1) )
+plotDispEsts( dds, ylim = c(1e-6, 1e1) )
+
+
+#Configure and run DESeq2 for all samples (effect of IP adjusted for CLIP)
+#This code will run, but it does not work as desired for two reasons:
+#   1. Many of the counts are 0.  This can make estimation of fold changes difficult.
+#   2. The background is not being normalized by the bg_scale factor to account for library yields.
+<!-- dds <- DESeqDataSetFromMatrix( -->
+<!--   countData = countdata, -->
+<!--   colData = coldata, -->
+<!--   design = ~ clip + ip) -->
+
+<!-- dds <- DESeq(dds) -->
+<!-- res <- results( dds ) -->
+<!-- write.table(as.data.frame(res), file="S123456-deseq2_output.tabular", sep="\t") -->
