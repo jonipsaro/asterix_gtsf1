@@ -50,6 +50,7 @@ The pipeline is broken into several main sections:
 
 ## Part 1 - Preliminary read processing
 **Note: The beginning of this pipeline works off of a single fastq file. This can come directly from the sequencing of a single read, or, if paired-end reads are overlapping (our use case), they can be combined using FLASH.*
+
 0. Set up directory architecture
 	```mkdir 1_raw_data 2_flash 3_adapter_trimmed 4_remove_pcr_duplicates 5_reverse_complement 6_collapsed```
 1. Place raw .fastq files in the 1_raw_data directory
