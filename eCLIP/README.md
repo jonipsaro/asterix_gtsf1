@@ -146,9 +146,9 @@ The pipeline is broken into several main sections:
 	```
 
 2. Generate .bed files from STAR output
-    This will be need to be run for each sample.  Output should be placed in the 8_bamtobed folder.<BR>
-    **Note: uniqued files seem to have about 0.1% fewer entries ~10K entries for 10M read library.*<BR>
-    **Note: It is a good idea to check the formatting of the .bed files.  Locus formatting should match that in the main annotation .bed that will be used.  Depending on the STAR input files, the STAR output may or may not have some common formatting features (such as "chr" beginning each entry).  Check for consistency and include an awk command below if minor formatting changes are required.*<BR>
+    This will be need to be run for each sample.  Output should be placed in the 8_bamtobed folder.<BR></BR>
+    **Note: uniqued files seem to have about 0.1% fewer entries ~10K entries for 10M read library.*
+    **Note: It is a good idea to check the formatting of the .bed files.  Locus formatting should match that in the main annotation .bed that will be used.  Depending on the STAR input files, the STAR output may or may not have some common formatting features (such as "chr" beginning each entry).  Check for consistency and include an awk command below if minor formatting changes are required.*<BR></BR>
     **Note: For the mm9 and mm10 assembly annotations, the formatting is consistent so no addition awk command is needed. It is needed, however, for the dm6 annotations.*<BR>
    
     **Example - mm10:**<BR>
@@ -157,12 +157,12 @@ The pipeline is broken into several main sections:
     **Example - dm6:**<BR>
 	```bedtools bamtobed -i S1/Aligned.sortedByCoord.out.bam > S1_temp.bed; awk '{print "chr" $0}' S1_temp.bed > S1.bed; rm S1_temp.bed; sort -k1,1 -k2,2n S1.bed | uniq > S1_unique.bed```
 
-3. Clean up the mapping to remove "multi-aligners" that are not true "multi-mappers."<BR>
+3. Clean up the mapping to remove "multi-aligners" that are not true "multi-mappers."<BR></BR>
     ```python 2_mapping_cleanup/unique_bed_tidy.py```
 
 ## Part 3a - Annotation
-**Note:  Annotation is performed with bedtools.  The -f 1 option requires complete intersection "a" within "b"; -s enforces strandedness.*<BR>
-**Note:  The path to the annotation .bed file must be specified for file "b".*<BR>
+Annotation is performed with bedtools. The -f 1 option requires complete intersection "a" within "b"; -s enforces strandedness. The path to the annotation .bed file must be specified for file "b".
+
 1.  Annotate<BR>
     ```bedtools intersect -f 1 -wa -wb -s -a 8_bamtobed/S1_unique_tidy.bed -b mm10_annotations/mm10_annotations.bed > 9_annotated/S1_annotated.txt```
 
@@ -175,9 +175,9 @@ The pipeline is broken into several main sections:
 ## Part 3b - Filtering
 Filtering is performed to ascribe multimapping reads to a particular class.
 Most usually, the filtering order is based on transcript abundance, but the order can be modified with the scripts.<BR>
-0. Set up directories.<BR>
-**Note: Subdirectories can be useful if you want to try multiple filtering orders (see below and the filter_by_class.py script).*<BR>
-		```mkdir 10_filtered```
+
+0. Set up directories. Subdirectories can be useful if you want to try multiple filtering orders (see below and the filter_by_class.py script).<BR>
+	```mkdir 10_filtered```
 
 1. Determine ALL of the annotation classes in the main annotation .bed file<BR>
 	```python 3_annotation_and_filtering/get_annotation_classes.py _path_to_file_name_```
@@ -196,6 +196,7 @@ Most usually, the filtering order is based on transcript abundance, but the orde
 ## Part 4 - Calculate Enrichment
 ### Option 1 - Simple Enrichment
 This option will normalize multimappers within each class, calculate annotation pileups, subtract background, and calculate fold-changes.<BR>
+	
 0. Set up directories<BR>
 	```mkdir 11a_normalized 12a_pileup 13a_enrichment```
 
@@ -257,11 +258,11 @@ Since DESeq2 does not support fractional reads, a new gene model is built.
 	appropriate annotation.
 
 1. Build the alternative gene model (i.e. "logical genes")<BR>
-**Note: Make sure all classes are accounted for.  This should be the same list as used in filter_by_class.py (above).  Class order does not matter for this script.*<BR>
+<I>*Note: Make sure all classes are accounted for.  This should be the same list as used in filter_by_class.py (above).  Class order does not matter for this script.</I><BR>
 	```python 4b_deseq2/make_logical_gene_list.py```
 Move the outputs to a directory 11b_logical_genes.
 
-2. Create composite files will all logical_genes and read_ids
+2. Create composite files will all logical_genes and read_ids<BR></BR>
 **Example:**<BR>
 	```cat S1/*.txt | sort > S1/S1-logical_abundance_lookup.txt```
 	```cat S1/*.txt | sort > S1/S1-all-logical_genes.txt```
@@ -271,31 +272,27 @@ A prep script was written that takes *-all-logical_genes.txt files for each samp
 	```python 4b_deseq2/deseq2_prep.py```
 
 4. Run DESeq2
-    1. Launch the script run_deseq2_eclip_v1.Rmd in R studio.
-    **Note: This script assumes the column order as follows:
-	bg_input, ip1_input, ip2_input, bg_ip, ip1, ip2*
-    2. Set the folder and working directory.
-
-	2. DESeq2 will be run three times:
+    1. Launch the script run_deseq2_eclip_v1.Rmd in R studio.<BR></BR>
+    **Note: This script assumes the column order as follows: bg_input, ip1_input, ip2_input, bg_ip, ip1, ip2*<BR>
+    2. Set the folder and working directory.<BR></BR>
+	**DESeq2 will be run three times:**
     	1. ip versus all inputs
     	2. bg_ip versus all inputs
     	3. experimental ips versus background ip
 
 5. Calculate fold-enrichments and extract statistics
 Background-subtracted fold enrichments are calculated by comparing the various DESeq2 outputs.
-The output file will have the following tab-delimited columns:<BR>
+The output file will have the following tab-delimited columns:<BR></BR>
     ```
     gene name (or logical gene name)    fold enrichment     p-value[adjusted]
     ```
-    **Note: Make sure to adjust the background scaling factors at the top of the script.  These should be the same as those used in the simple enrichment pipeline.*
-    **Note: DESeq2 output includes log2-fold enrichments.  These are converted to fold enrichments (not log2).*
-    **Note: p-values will be the less significant value of [ip versus input; ip versus background])*<BR>
-
+    <I>*Note: Make sure to adjust the background scaling factors at the top of the script.  These should be the same as those used in the simple enrichment pipeline.<BR>
+    *Note: DESeq2 output includes log2-fold enrichments.  These are converted to fold enrichments (not log2).<BR>
+    *Note: p-values will be the less significant value of [ip versus input; ip versus background])</I>
     ```python 4b_deseq2/deseq2_polish.py```
 
 6. File cleanup - Add no_annotation class<BR>
-	```sed 's/^no_annotation/no_annotation:no_annotation/' S123456-deseq2_input.txt > S123456-deseq2_input_formatted.txt```
-	
+	```sed 's/^no_annotation/no_annotation:no_annotation/' S123456-deseq2_input.txt > S123456-deseq2_input_formatted.txt```<BR>
 	```sed 's/^no_annotation/no_annotation:no_annotation/' S123456-deseq2_polished.txt > S123456-deseq2_polished_formatted.txt```
 
 7. Convert from logical_genes to normal annotations
