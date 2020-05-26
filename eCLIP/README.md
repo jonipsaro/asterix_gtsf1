@@ -7,7 +7,7 @@ This folder has scripts for processing eCLIP next-generation sequencing librarie
 - The workflow is outlined below.
 - Each script is also annotated.
 - Several scripts require either user input or modification based on the user's needs.
-- **Please also see the eCLIP_parameters_summary.md file for cataloged explanations of inputs, outputs and parameters.**
+- **Please also see the [eCLIP_parameters_summary.md] (eCLIP_parameters_summary.md) file for cataloged explanations of inputs, outputs and parameters.*
 
 ## Introduction
 Enhanced crosslinking and immunoprecipitation (eCLIP) is a molecular biological protocol that allows for identification and characterization of RNA species that are directly bound to a protein of interest. Briefly, this method uses UV crosslinking as a means to covalently link proteins to RNAs within cells, extract these complexes using affinity or immunological pull-down against a protein of interest, then subject the bound nucleic acids to next-generation sequencing.
