@@ -25,7 +25,9 @@ The user will be prompted for the file name to operate on.<BR>
 	```python polyA_trim.py```
 
 ## Step 3 - Size selection
-This step was performed via Galaxy using the FASTX manipulation tools. In our workflow, we selected for sequences 30-85 nucleotides in length (inclusive).
+Size selection was performed via Galaxy using the FASTX manipulation tools.
+In our workflow, we selected for sequences 30-85 nucleotides in length (inclusive).
 
-## Step 4 - Quality-cutoff
-This step was also performed via Galaxy using the FASTX manipulation tools.  In our workflow, we imposed a quality cutoff with 95% of bases in the sequence being obligated to pass a threshold score of 24.
+## Step 4 - Quality cutoff
+A quality cutoff step was also performed via Galaxy using the FASTX manipulation tools.
+In our workflow, we imposed a quality cutoff with 95% of bases in the sequence being obligated to pass a threshold score of 24.
