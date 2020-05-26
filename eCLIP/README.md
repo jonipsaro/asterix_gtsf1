@@ -7,7 +7,7 @@ This folder has scripts for processing eCLIP next-generation sequencing librarie
 - The workflow is outlined below.
 - Each script is also annotated.
 - Several scripts require either user input or modification based on the user's needs.
-- **Please also see the [eCLIP_parameters_summary.md] (eCLIP_parameters_summary.md) file for cataloged explanations of inputs, outputs and parameters.*
+- **Please also see the [eCLIP_parameters_summary.md](eCLIP_parameters_summary.md) file for cataloged explanations of inputs, outputs and parameters.**
 
 ## Introduction
 Enhanced crosslinking and immunoprecipitation (eCLIP) is a molecular biological protocol that allows for identification and characterization of RNA species that are directly bound to a protein of interest. Briefly, this method uses UV crosslinking as a means to covalently link proteins to RNAs within cells, extract these complexes using affinity or immunological pull-down against a protein of interest, then subject the bound nucleic acids to next-generation sequencing.
@@ -19,10 +19,10 @@ To accommodate these needs, we implemented the pipeline below to allow for multi
 ## Notes
 - Several of the scripts require input from the user. These instances are annotated in the markdown below.
 - Almost all of the scripts provided here are written using Python 3 with the following dependencies: datetime, os, sys, numpy, scipy, math, pandas
-- If combining paired-end reads, we recommend using FLASH, which can be downloaded here: https://ccb.jhu.edu/software/FLASH/
-- Mapping is performed using STAR (https://github.com/alexdobin/STAR)
-- Additional tools that are used in this workflow are bedtools (https://bedtools.readthedocs.io/) and collapse (from the FASTX utilities in Galaxy; https://usegalaxy.org/)
-- DESeq2 (https://bioconductor.org/packages/release/bioc/html/DESeq2.html), which is only used for an alternative workflow is run in R. An example script is provided.
+- If combining paired-end reads, we recommend using [FLASH](https://ccb.jhu.edu/software/FLASH/).
+- Mapping is performed using [STAR](https://github.com/alexdobin/STAR)
+- Additional tools that are used in this workflow are [bedtools](https://bedtools.readthedocs.io/) and collapse (from the FASTX utilities in [Galaxy](https://usegalaxy.org/))
+- [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html), which is only used for an alternative workflow is run in R. An example R markdown file is provided.
 - Suggested file architecture and directory names are listed, but these can be adjusted.  Please note the if you want to customize these, changes may need to be made within the scripts as well.
 
 ## Overview
