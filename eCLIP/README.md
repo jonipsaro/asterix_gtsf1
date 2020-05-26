@@ -1,7 +1,7 @@
 # eCLIP Data Processing Pipeline
 
 ## Summary & Key Points
-This repository has scripts for processing eCLIP next-generation sequencing libraries.
+This folder has scripts for processing eCLIP next-generation sequencing libraries.
 - These scripts accommodate multi-mapping reads and employ a sequential annotation class filtering scheme to assist with normalization. 
 - Background is subtracted based on physical measurements made during library construction in addition to read counts upon sequencing.
 - The workflow is outlined below.
