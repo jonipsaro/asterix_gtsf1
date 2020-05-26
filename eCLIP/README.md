@@ -54,7 +54,7 @@ The pipeline is broken into several main sections:
 	``` 
 
 ## Part 1 - Preliminary read processing
-**Note: The beginning of this pipeline works off of a single fastq file. This can come directly from the sequencing of a single read, or, if paired-end reads are overlapping (our use case), they can be combined using FLASH.*
+**Note: The beginning of this pipeline works off of a single fastq file. This can come directly from the sequencing of a single read or, if paired-end reads are overlapping (our use case), they can be combined using FLASH.*
 
 0. Set up directory architecture<BR>
 	```mkdir 1_raw_data 2_flash 3_adapter_trimmed 4_remove_pcr_duplicates 5_reverse_complement 6_collapsed```
@@ -71,13 +71,13 @@ The pipeline is broken into several main sections:
 	```python 1_read_cleanup/count_adapters_only.py```
 
 4. Unique Molecular Identifier (UMI) collapse
-    Remove PCR duplicates by comparing UMIs within each file.  The script will prompt to specify the file names for the inputs. Output can be directed to the 4_remove_pcr_duplicates folder.<BR>
+    Remove PCR duplicates by comparing UMIs within each file.  The script will prompt to specify the file names for the inputs. Output can be directed to the 4_remove_pcr_duplicates folder.<BR></BR>
     **Note: The library construction is slightly different for the input samples versus the CLIP samples.  Make sure to run the correct version of umi_collapse.py.*<BR>
 	```python 1_read_cleanup/umi_collapse.py```<BR>
 	```python 1_read_cleanup/umi_collapse_inputs.py```
 
 5. Reverse complement
-    The script will prompt to specify the file names for the inputs. Output can be directed to the 5_reverse_complement folder.<BR>
+    The script will prompt to specify the file names for the inputs. Output can be directed to the 5_reverse_complement folder.<BR></BR>
     **Note: eCLIP libraries are stranded with the reverse complement corresponding to sense strand of the input.*<BR>
 	```python 1_read_cleanup/rev_comp.py```
 
