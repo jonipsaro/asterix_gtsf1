@@ -71,14 +71,14 @@ The pipeline is broken into several main sections:
 	```python 1_read_cleanup/count_adapters_only.py```
 
 4. Unique Molecular Identifier (UMI) collapse
-    Remove PCR duplicates by comparing UMIs within each file.  The script will prompt to specify the file names for the inputs. Output can be directed to the 4_remove_pcr_duplicates folder.<BR></BR>
-    **Note: The library construction is slightly different for the input samples versus the CLIP samples.  Make sure to run the correct version of umi_collapse.py.*<BR>
+    Remove PCR duplicates by comparing UMIs within each file.  The script will prompt to specify the file names for the inputs. Output can be directed to the 4_remove_pcr_duplicates folder.<BR>
+    <I>*Note: The library construction is slightly different for the input samples versus the CLIP samples.  Make sure to run the correct version of umi_collapse.py.</I><BR>
 	```python 1_read_cleanup/umi_collapse.py```<BR>
 	```python 1_read_cleanup/umi_collapse_inputs.py```
 
 5. Reverse complement
-    The script will prompt to specify the file names for the inputs. Output can be directed to the 5_reverse_complement folder.<BR></BR>
-    **Note: eCLIP libraries are stranded with the reverse complement corresponding to sense strand of the input.*<BR>
+    The script will prompt to specify the file names for the inputs. Output can be directed to the 5_reverse_complement folder.<BR>
+    <I>*Note: eCLIP libraries are stranded with the reverse complement corresponding to sense strand of the input.</I><BR>
 	```python 1_read_cleanup/rev_comp.py```
 
 6. Collapse reads
