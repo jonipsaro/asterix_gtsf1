@@ -42,11 +42,11 @@ The pipeline is broken into several main sections:
 	| Sample abbreviation | Description |
 	| --- | --- |
 	| S1 | Non-crosslinked input |
-	| S2 | Crosslinked input sample 1 |
-	| S3 | Crosslinked input sample 2 |
+	| S2 | Crosslinked input (replicate 1) |
+	| S3 | Crosslinked input (replicate 2) |
 	| S4 | Non-crosslinked IP (background) |
-	| S5 | Crosslinked IP sample 1 |
-	| S6 | Crosslinked IP sample 2 |
+	| S5 | Crosslinked IP (replicate 1) |
+	| S6 | Crosslinked IP (replicate 2) |
 
 3. Read annotations should be in tab-delimited bed format:
 	```
