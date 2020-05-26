@@ -17,7 +17,7 @@ Custom gene annotations were prepared for both the mouse mm10 and *Drosophila* d
 - FlyBase (7)
 - miRBase release 22.1 (2)
 - piRNA cluster DB (3)
-- custom annotations provided by A. Haase for piRNAs
+- Custom annotations provided by A. Haase for piRNAs
 - TEtranscripts (4)
 - tRNA DB, UCSC (6)
 
