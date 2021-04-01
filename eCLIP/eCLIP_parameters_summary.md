@@ -1,5 +1,11 @@
 # eCLIP Pipeline - Parameters list and summary
 
+## Citation
+>Asterix/Gtsf1 links tRNAs and piRNA silencing of retrotransposons<BR>
+>Jonathan J. Ipsaro, Paul A. O'Brien, Shibani Bhattacharya, Arthur G. Palmer 3rd, Leemor Joshua-Tor<BR>
+>Cell Rep. 2021 Mar 30;34(13):108914. doi: 10.1016/j.celrep.2021.108914.<BR>
+>PMID: 33789107
+
 ## Read Cleanup - 1_read_cleanup directory
 ### Joining of paired-end reads with FLASH
 ```
