@@ -4,6 +4,12 @@
 RNA Immunoprecipitation allows for characterization of RNAs that co-purify with an isolated protein of interest.
 This workflow begins data generated using the SMARTer smRNA-Seq Kit for Illumina sequencing (Takara). After sequencing, the fastq data are trimmed, size-selected, and quality-selected to generate the final dataset.
 
+## Citation
+>Asterix/Gtsf1 links tRNAs and piRNA silencing of retrotransposons<BR>
+>Jonathan J. Ipsaro, Paul A. O'Brien, Shibani Bhattacharya, Arthur G. Palmer 3rd, Leemor Joshua-Tor<BR>
+>Cell Rep. 2021 Mar 30;34(13):108914. doi: 10.1016/j.celrep.2021.108914.<BR>
+>PMID: 33789107
+
 ## Overview
 The workflow is divided into the following steps:
 1. Prepare, sequence, and demultiplex all sequencing libraries such that each fastq file corresponds to a single sample.
