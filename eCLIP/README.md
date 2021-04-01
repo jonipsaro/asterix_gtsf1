@@ -9,6 +9,12 @@ This folder has scripts for processing eCLIP next-generation sequencing librarie
 - Several scripts require either user input or modification based on the user's needs.
 - **Please also see the [eCLIP_parameters_summary.md](eCLIP_parameters_summary.md) file for cataloged explanations of inputs, outputs and parameters.**
 
+## Citation
+>Asterix/Gtsf1 links tRNAs and piRNA silencing of retrotransposons<BR>
+>Jonathan J. Ipsaro, Paul A. O'Brien, Shibani Bhattacharya, Arthur G. Palmer 3rd, Leemor Joshua-Tor<BR>
+>Cell Rep. 2021 Mar 30;34(13):108914. doi: 10.1016/j.celrep.2021.108914.<BR>
+>PMID: 33789107
+
 ## Introduction
 Enhanced crosslinking and immunoprecipitation (eCLIP) is a molecular biological protocol that allows for identification and characterization of RNA species that are directly bound to a protein of interest. Briefly, this method uses UV crosslinking as a means to covalently link proteins to RNAs within cells, extract these complexes using affinity or immunological pull-down against a protein of interest, then subject the bound nucleic acids to next-generation sequencing.
 
